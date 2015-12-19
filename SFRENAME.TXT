@@ -1,0 +1,81 @@
+Sfrename - rename OS/2 special files and set attributes
+Copyright Oct. 2, 1993 by Robert W. Babcock and WSS Division of DDC
+
+                              Why rename?
+
+OS/2 users may find it convenient or necessary to boot DOS to backup or
+defragment their FAT-format hard disks.  Some tape drives do not work under
+OS/2, and you wouldn't want to defragment the disk which OS/2 was booted from
+even if OS/2 allowed you to do so because it has open files on it.
+
+On a FAT disk, OS/2 creates two files with "funny" names: "EA DATA. SF" and
+"WP ROOT. SF".  The first of these has read-only, hidden and system
+attributes, the second hidden and system.  DOS backup and disk defragmenting
+programs may choke on the embedded blanks in these names, or may ignore them
+because of the attributes.  On alternate executions, sfrename changes the
+blanks in these names to underscores and gives the files normal attributes
+then changes the underscores back to blanks and restores the usual
+attributes.  So, you can boot DOS, add underscores to the names of the
+special files, backup or defragment, remove the underscores and return to
+OS/2.  Note that all of these functions except putting the blanks back in
+the file names can be performed using DOS commands and wildcards.
+
+                                   Usage
+
+Sfrename is a DOS program.  You must boot DOS to use it because OS/2 won't
+let you rename its special files.  Just switch to the appropriate disk and
+type SFRENAME to run the program, it takes no arguments.  It looks at the
+files in the root directory of the current drive to decide which way to do
+the renaming. It also checks that one of the two expected combinations of
+files exists, and does nothing if files are missing or extra files are
+present.
+
+One other thing you might want to do before starting a backup or defragging
+is to delete SWAPPER.DAT.  OS/2 will recreate this file, and it does not hold
+any useful information across reboots.  Backing it up or defragmenting it
+would be a waste of time.  Return to OS/2 promptly after defragging so that
+contiguous disk space is available for the recreated SWAPPER.DAT.
+
+                      Defragmenting considerations
+
+EA DATA. SF holds "extended attributes" for files.  I have seen claims that
+OS/2 attempts to put the fragments of EA DATA. SF near the associated files,
+so defragmenting it may harm rather improve performance.  On the other hand,
+defragmenting files may move them far away from their original position, so
+this argument is suspect.  In any case, defragmenting EA DATA. SF does not
+seem to break anything.  Another claim, which I do believe, is that since
+OS/2 uses previously unused fields in the directory to store pointers to
+entries in EA DATA. SF, a defragmenting program which seems fine under DOS
+could fail to preserve these fields and thus effectively destroy the extended
+attributes irregardless of whether EA DATA. SF is moved.  Supposedly, very
+old versions of Norton Speeddisk suffer from this problem, but modern
+versions are ok, as are most other defragmenters.  Unfortunately, I don't
+know of any safe way of testing whether a defragmenter is safe.
+
+                         Other hidden OS/2 files
+
+OS/2 creates several other hidden files in the root directory of a FAT boot
+drive.  Sfrename does not do anything with these because I fear that the
+names and number of files may change with future OS/2 releases.  If
+necessary, the DOS attrib command can be used to make these files visible.
+
+                                 License
+
+You are granted an unlimited license to use Sfrename on any number of
+computers.  You may modify the included Borland C 3.1 source code, but if you
+distribute a modified version, you must modify the opening banner to display
+both my original copyright and a message indicating that you have made
+changes.  Sfrename is made available without charge, and without any
+warranty.  BBS operators, online services and networked file archive sites
+may make it available for download.  Public domain/shareware copying services
+vendors may distribute Sfrename on floppy or CD-ROM disks or other media.
+
+Robert W. Babcock
+WSS Division of DDC
+4 Reeves Road
+Bedford, MA  01730
+617-275-1183
+Internet: babcock@cfa.harvard.edu
+       or rbabcock@bix.com
+WSS/DDC tech support BBS: 617-275-5834  14,400 baud, v.32bis, 24 hours
+                          Home of Wssindex disk cataloger
